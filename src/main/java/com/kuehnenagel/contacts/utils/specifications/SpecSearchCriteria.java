@@ -28,6 +28,19 @@ public class SpecSearchCriteria {
 
     public SpecSearchCriteria(String key, String operation, String prefix, String value, String suffix) {
         SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
+        
+        if(value.length() == 2) {
+        	if(value.startsWith(SearchOperation.ZERO_OR_MORE_REGEX)) {
+        		value = value.substring(1);
+        		prefix = SearchOperation.ZERO_OR_MORE_REGEX;
+        	}
+        	
+        	if(value.endsWith(SearchOperation.ZERO_OR_MORE_REGEX)) {
+        		value = value.substring(0, value.length() - 1);
+        		suffix = SearchOperation.ZERO_OR_MORE_REGEX;
+        	}
+        }
+        
         if (op != null && op == SearchOperation.EQUALITY) { // the operation may be complex operation
             final boolean startWithAsterisk = prefix != null && prefix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
             final boolean endWithAsterisk = suffix != null && suffix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
