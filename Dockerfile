@@ -1,7 +1,5 @@
 FROM maven:3.5.4-jdk-8-alpine as builder 
 
-VOLUME ~/.m2:/var/maven/.m2
-
 ADD . /home/app
 
 RUN cd /home/app \
